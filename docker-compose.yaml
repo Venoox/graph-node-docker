@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+  graph-node:
+    build: ./graph-node
+    restart: always
+    ports:
+      - 8000:8000
+      - 8001:8001
+      - 8020:8020
+    volumes:
+      - geth_data:/ethereum/
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: graph-node
+      IPFS_HOST: ipfs
+      RPC_URI_SCHEME: http
+      RPC_HOST: eth-node
+      RPC_PORT: 8545
+      RPC_NETWORK: mainnet
+      RPC_CAPABILITIES: full
+    depends_on:
+      - ipfs
+      - db
+      - eth-node
+  ipfs:
+    image: ipfs/go-ipfs:v0.11.0
+    restart: always
+    environment:
+      IPFS_PROFILE: server
+      IPFS_PATH: /ipfsdata
+    volumes:
+      - ipfs_data:/ipfsdata
+  db:
+    image: postgres:14-bullseye
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: graph-node
+  eth-node:
+    image: ethereum/client-go:v1.10.14
+    restart: always
+    volumes:
+      - geth_data:/root/.ethereum/
+    command: ["--syncmode", "light", "-http", "-http.port", "8545", "--http.addr", "0.0.0.0", "--http.vhosts", "*"]
+
+volumes:
+  geth_data:
+  postgres_data:
+  ipfs_data:
