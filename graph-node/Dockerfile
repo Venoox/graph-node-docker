@@ -32,6 +32,6 @@ RUN chmod +x ./wait-for-it.sh
 CMD ./wait-for-it.sh ${IPFS_HOST}:${IPFS_PORT} && \
     ./wait-for-it.sh ${POSTGRES_HOST}:${POSTGRES_PORT} && \
     ./wait-for-it.sh ${RPC_HOST}:${RPC_PORT} && \
-    ./graph-node --postgres-url postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB} \
+    exec ./graph-node --postgres-url postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB} \
     --ethereum-rpc ${RPC_NETWORK}:${RPC_CAPABILITIES}:${RPC_URI_SCHEME}://${RPC_HOST}:${RPC_PORT}${RPC_URI} \
     --ipfs ${IPFS_HOST}:${IPFS_PORT}
