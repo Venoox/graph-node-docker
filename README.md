@@ -42,3 +42,5 @@ Issues I encountered:
 - Somewhat unrelated to Docker but the application couldn't connect to HTTPS endpoints because the slim image doesn't include CA certificates and the fix was to just install ca-certificates package provided by Debian.
 
 This project is supposed to be used as a GraphQL server that processes requests from clients and blocks from the blockchain however it does include a website for GraphQL queries for easier access so that's only thing I can take a screenshot of.
+
+![image](https://user-images.githubusercontent.com/21956707/148694278-23d6e92d-d257-467f-9a7f-9d1696e0cbeb.png)

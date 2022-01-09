@@ -1,8 +1,8 @@
-version: "3.9"
+version: "3"
 
 services:
   graph-node:
-    build: ./graph-node
+    image: venoox/graph-node:main
     restart: always
     ports:
       - 8000:8000
@@ -47,7 +47,7 @@ services:
     restart: always
     volumes:
       - geth_data:/root/.ethereum/
-    command: ["--syncmode", "light", "-http", "-http.port", "8545", "--http.addr", "0.0.0.0", "--http.vhosts", "*"]
+    command: ["-http", "-http.port", "8545", "--http.addr", "0.0.0.0", "--http.vhosts", "*"]
 
 volumes:
   geth_data:
